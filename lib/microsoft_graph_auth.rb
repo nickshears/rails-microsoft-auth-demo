@@ -10,8 +10,8 @@ module OmniAuth
       DEFAULT_SCOPE = 'openid email profile User.Read'.freeze
 
       # Configure the Microsoft identity platform endpoints
-      option  :client_options,
-              site:          'https://login.microsoftonline.com',
+      option :client_options,
+             :site => 'https://login.microsoftonline.com',
               authorize_url: "/#{ENV['AZURE_TENANT_ID']}/oauth2/v2.0/authorize",
               token_url:     "/#{ENV['AZURE_TENANT_ID']}/oauth2/v2.0/token"
 
@@ -30,7 +30,7 @@ module OmniAuth
 
       def raw_info
         # Get user profile information from the /me endpoint
-        @raw_info ||= access_token.get('https://graph.microsoft.com/v1.0/me').parsed
+        @raw_info ||= access_token.get('https://graph.microsoft.com/v1.0/me?$select=displayName,mail,mailboxSettings,userPrincipalName').parsed
       end
 
       def authorize_params
